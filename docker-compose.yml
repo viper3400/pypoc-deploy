@@ -1,0 +1,15 @@
+services:
+  pytodo:
+    build: .
+    ports:
+      - "8080:8000"
+    environment:
+      SECRET_KEY: "${SECRET_KEY}"
+      PLATFORM_ENABLED_APPS: "pydo"
+      PYDO_DATA_DIR: "/app/data"
+      PYTODO_PASSWORD_HASH: "${PYTODO_PASSWORD_HASH}"
+      PORT: "8000"
+      GUNICORN_WORKERS: "2"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
