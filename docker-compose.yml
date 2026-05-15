@@ -1,7 +1,6 @@
 services:
   pytodo:
     build: .
-    user: "${PYDO_UID}:${PYDO_GID}"
     ports:
       - "8080:8000"
     environment:
@@ -15,5 +14,8 @@ services:
       PORT: "8000"
       GUNICORN_WORKERS: "2"
     volumes:
-      - ./data:/app/data
+      - pytodo_data:/app/data
     restart: unless-stopped
+
+volumes:
+  pytodo_data:

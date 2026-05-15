@@ -1,17 +1,21 @@
-FROM ghcr.io/viper3400/pypoc:0.2.0
+FROM python:3.12-slim
 
-ARG PYDO_PLUGIN_WHEEL_URL="https://github.com/viper3400/pydo/releases/download/plugin-pydo-v0.1.0/flask_plugin_pydo-0.1.0-py3-none-any.whl"
-
-ENV PORT=8000 \
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PORT=8000 \
     GUNICORN_WORKERS=2 \
     HOME=/app/data
 
 WORKDIR /app
 
-RUN uv pip install --system "${PYDO_PLUGIN_WHEEL_URL}"
+RUN pip install --no-cache-dir uv
+
+COPY pyproject.toml uv.lock README.md wsgi.py ./
+
+RUN uv sync --locked --no-dev
 RUN mkdir -p /app/data
 
 EXPOSE 8000
 VOLUME ["/app/data"]
 
-CMD ["sh", "-c", "uv run gunicorn \"flask_plugin_platform:create_app()\" --bind 0.0.0.0:${PORT:-8000} --workers ${GUNICORN_WORKERS:-2}"]
+CMD ["sh", "-c", "uv run gunicorn \"wsgi:app\" --bind 0.0.0.0:${PORT:-8000} --workers ${GUNICORN_WORKERS:-2}"]

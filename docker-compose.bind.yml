@@ -1,0 +1,5 @@
+services:
+  pytodo:
+    user: "${PYDO_UID}:${PYDO_GID}"
+    volumes:
+      - ./data:/app/data

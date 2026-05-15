@@ -1,18 +1,20 @@
 # pypoc-deploy
 
-Thin deployment repository for the `flask-plugin-platform` app plus the `pydo`
-plugin.
+Product deployment repository for the `flask-plugin-platform` app plus the
+`pydo` plugin.
 
 ## What This Runs
 
-- `ghcr.io/viper3400/pypoc:0.2.0` as the base runtime image
-- `flask-plugin-pydo` from `pydo` release `plugin-pydo-v0.1.0`
+- A single product image built from this repo
+- `flask-plugin-platform` from the `pypoc` release `v0.2.0`
+- `flask-plugin-pydo` from the `pydo` release `plugin-pydo-v0.1.0`
 - Gunicorn on port `8000` inside the container
 - Persistent task data mounted at `/app/data`
 
 Plugin discovery is driven by installed Python package entry points. The
-container uses `flask_plugin_platform:create_app()` directly and relies on the
-platform's environment-to-config support for plugin settings.
+container uses a minimal [wsgi.py](/Users/Jan/Documents/Development/pypoc-deploy/wsgi.py:1)
+bootstrap and relies on the platform's environment-to-config support for plugin
+settings.
 
 ## Requirements
 
@@ -89,13 +91,15 @@ uv run flask --app flask_plugin_platform.app:create_app run --debug
 
 ## Dependency Pins
 
-This repo uses the published `pypoc` container image as its base runtime and
-installs the `pydo` plugin wheel on top:
+This repo builds the final product image directly from pinned Python package
+artifacts:
 
-- `ghcr.io/viper3400/pypoc:0.2.0`
+- `https://github.com/viper3400/pypoc/releases/download/v0.2.0/flask_plugin_platform-0.2.0-py3-none-any.whl`
 - `https://github.com/viper3400/pydo/releases/tag/plugin-pydo-v0.1.0`
 
-See [Dockerfile](/Users/Jan/Documents/Development/pypoc-deploy/Dockerfile:1)
-for the exact base image and plugin wheel, and
+See [pyproject.toml](/Users/Jan/Documents/Development/pypoc-deploy/pyproject.toml:1)
+for the version pins,
+[Dockerfile](/Users/Jan/Documents/Development/pypoc-deploy/Dockerfile:1)
+for the product image build, and
 [docker-compose.yml](/Users/Jan/Documents/Development/pypoc-deploy/docker-compose.yml:1)
 for the active runtime configuration.
