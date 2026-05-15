@@ -3,6 +3,6 @@ name = "pypoc-deploy"
 version = "0.1.0"
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    "flask-plugin-platform @ https://github.com/viper3400/pypoc/releases/download/v0.1.0/flask_plugin_platform-0.1.0-py3-none-any.whl",
+    "flask-plugin-platform @ https://github.com/viper3400/pypoc/releases/download/v0.2.0/flask_plugin_platform-0.2.0-py3-none-any.whl",
     "flask-plugin-pydo @ https://github.com/viper3400/pydo/releases/download/plugin-pydo-v0.1.0/flask_plugin_pydo-0.1.0-py3-none-any.whl",
 ]

@@ -7,6 +7,8 @@ services:
     environment:
       SECRET_KEY: "${SECRET_KEY}"
       PLATFORM_ENABLED_APPS: "pydo"
+      PLATFORM_APP_CONFIG_PREFIXES: "PYDO,PYTODO"
+      PLATFORM_INSTANCE_PATH: "/app/data/flask-instance"
       PYDO_DATA_DIR: "/app/data"
       PYTODO_PASSWORD_HASH: "${PYTODO_PASSWORD_HASH}"
       HOME: "/app/data"
