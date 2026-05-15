@@ -32,6 +32,7 @@ Optional runtime variables:
 - `PORT`: defaults to `8000`
 - `GUNICORN_WORKERS`: defaults to `2`
 - `PYDO_DATA_DIR`: defaults to `/app/data` in the container
+- `HOME`: defaults to `/app/data` so Gunicorn runtime state is writable for the configured uid/gid
 
 The `pydo` footer version is derived from the installed `flask-plugin-pydo`
 package version during app startup.

@@ -9,6 +9,7 @@ services:
       PLATFORM_ENABLED_APPS: "pydo"
       PYDO_DATA_DIR: "/app/data"
       PYTODO_PASSWORD_HASH: "${PYTODO_PASSWORD_HASH}"
+      HOME: "/app/data"
       PORT: "8000"
       GUNICORN_WORKERS: "2"
     volumes:
