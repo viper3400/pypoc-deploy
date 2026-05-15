@@ -8,10 +8,10 @@ ENV PORT=8000 \
 
 WORKDIR /app
 
-RUN python -m pip install --no-cache-dir "${PYDO_PLUGIN_WHEEL_URL}"
+RUN uv pip install --system "${PYDO_PLUGIN_WHEEL_URL}"
 RUN mkdir -p /app/data
 
 EXPOSE 8000
 VOLUME ["/app/data"]
 
-CMD ["sh", "-c", "gunicorn \"flask_plugin_platform:create_app()\" --bind 0.0.0.0:${PORT:-8000} --workers ${GUNICORN_WORKERS:-2}"]
+CMD ["sh", "-c", "uv run gunicorn \"flask_plugin_platform:create_app()\" --bind 0.0.0.0:${PORT:-8000} --workers ${GUNICORN_WORKERS:-2}"]
