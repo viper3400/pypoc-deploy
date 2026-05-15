@@ -1,4 +1,4 @@
-# pytodo-deploy
+# pypoc-deploy
 
 Thin deployment repository for the `flask-plugin-platform` app plus the `pydo`
 plugin.
