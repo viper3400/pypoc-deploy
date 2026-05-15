@@ -27,8 +27,6 @@ Create a `.env` file before starting the app:
 
 - `SECRET_KEY`: Flask session secret
 - `PYTODO_PASSWORD_HASH`: password hash used by the `pydo` login gate
-- `PYDO_UID`: host user id used to run the container process
-- `PYDO_GID`: host group id used to run the container process
 
 Optional runtime variables:
 
@@ -37,7 +35,7 @@ Optional runtime variables:
 - `PLATFORM_APP_CONFIG_PREFIXES`: set to `PYDO,PYTODO` so pydo-related env vars are copied into `app.config`
 - `PLATFORM_INSTANCE_PATH`: defaults to `/app/data/flask-instance`
 - `PYDO_DATA_DIR`: defaults to `/app/data` in the container
-- `HOME`: defaults to `/app/data` so Gunicorn runtime state is writable for the configured uid/gid
+- `HOME`: defaults to `/app/data` so Gunicorn runtime state is writable
 
 The `pydo` footer version is derived from the installed `flask-plugin-pydo`
 package version during app startup.
@@ -57,40 +55,28 @@ Example `.env`:
 ```dotenv
 SECRET_KEY=change-me
 PYTODO_PASSWORD_HASH=change-me
-PYDO_UID=1000
-PYDO_GID=1000
 ```
 
-## Ubuntu Bind-Mount Variant
+## Run With Docker
 
-If you want the task files to stay visible on the host as `./data/todo.txt`,
-use the bind-mount override instead of the default named volume setup.
-
-Create the host directory and give it to the uid/gid that will run inside the
-container:
+For a simple single-container run with the default Docker-managed named volume:
 
 ```bash
-mkdir -p data/flask-instance
-sudo chown -R 1000:1000 data
-sudo chmod -R u+rwX,g+rwX data
+docker run -p 8081:8000 \
+  --name pypoc-deploy \
+  -v pytodo_data:/app/data \
+  --env-file .env \
+  -e PLATFORM_ENABLED_APPS=pydo \
+  -e PLATFORM_APP_CONFIG_PREFIXES=PYDO,PYTODO \
+  -e PLATFORM_INSTANCE_PATH=/app/data/flask-instance \
+  -e PYDO_DATA_DIR=/app/data \
+  -e HOME=/app/data \
+  ghcr.io/viper3400/pypoc-deploy:0.2.2
 ```
 
-Then set matching values in `.env`:
-
-```dotenv
-PYDO_UID=1000
-PYDO_GID=1000
-```
-
-Start the stack with the override:
-
-```bash
-docker compose -f docker-compose.yml -f docker-compose.bind.yml up --build
-```
-
-Use this variant only when you explicitly want host-visible files. The default
-named-volume setup is less error-prone on Ubuntu because Docker manages the
-volume permissions internally.
+The plugin creates `todo.txt` only after the `pydo` app is actually used. Open
+`http://127.0.0.1:8081/pydo/` after startup to trigger creation of
+`/app/data/todo.txt`.
 
 ## Run Locally
 
