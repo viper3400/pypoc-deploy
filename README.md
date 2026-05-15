@@ -20,10 +20,12 @@ and plugin discovery is driven by installed Python package entry points.
 
 ## Environment
 
-Create a `.env` file or export these variables before starting the app:
+Create a `.env` file before starting the app:
 
 - `SECRET_KEY`: Flask session secret
 - `PYTODO_PASSWORD_HASH`: password hash used by the `pydo` login gate
+- `PYDO_UID`: host user id used to run the container process
+- `PYDO_GID`: host group id used to run the container process
 
 Optional runtime variables:
 
@@ -37,11 +39,23 @@ package version during app startup.
 ## Run With Docker Compose
 
 ```bash
+mkdir -p data
 docker compose up --build
 ```
 
-The app is exposed at `http://127.0.0.1:8080` and stores task data in the local
+The app is exposed at `http://127.0.0.1:8081` and stores task data in the local
 `./data` directory, mounted into the container as `/app/data`.
+The Flask instance path is also redirected under `/app/data/flask-instance`, so
+the runtime user does not need write access inside `.venv`.
+
+Example `.env`:
+
+```dotenv
+SECRET_KEY=change-me
+PYTODO_PASSWORD_HASH=change-me
+PYDO_UID=501
+PYDO_GID=20
+```
 
 ## Run Locally
 

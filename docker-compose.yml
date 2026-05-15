@@ -1,6 +1,7 @@
 services:
   pytodo:
     build: .
+    user: "${PYDO_UID}:${PYDO_GID}"
     ports:
       - "8080:8000"
     environment:
