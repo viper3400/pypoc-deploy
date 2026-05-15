@@ -151,7 +151,7 @@ wheels = [
 ]
 
 [[package]]
-name = "pytodo-deploy"
+name = "pypoc-deploy"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
