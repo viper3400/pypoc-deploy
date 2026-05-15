@@ -45,14 +45,12 @@ package version during app startup.
 ## Run With Docker Compose
 
 ```bash
-mkdir -p data
 docker compose up --build
 ```
 
 The app is exposed at `http://127.0.0.1:8080` and stores task data in the local
-`./data` directory, mounted into the container as `/app/data`.
-The Flask instance path is redirected under `/app/data/flask-instance`, so
-the runtime user does not need write access inside `.venv`.
+Docker volume `pytodo_data`, mounted into the container as `/app/data`.
+The Flask instance path is redirected under `/app/data/flask-instance`.
 
 Example `.env`:
 
@@ -62,6 +60,37 @@ PYTODO_PASSWORD_HASH=change-me
 PYDO_UID=1000
 PYDO_GID=1000
 ```
+
+## Ubuntu Bind-Mount Variant
+
+If you want the task files to stay visible on the host as `./data/todo.txt`,
+use the bind-mount override instead of the default named volume setup.
+
+Create the host directory and give it to the uid/gid that will run inside the
+container:
+
+```bash
+mkdir -p data/flask-instance
+sudo chown -R 1000:1000 data
+sudo chmod -R u+rwX,g+rwX data
+```
+
+Then set matching values in `.env`:
+
+```dotenv
+PYDO_UID=1000
+PYDO_GID=1000
+```
+
+Start the stack with the override:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.bind.yml up --build
+```
+
+Use this variant only when you explicitly want host-visible files. The default
+named-volume setup is less error-prone on Ubuntu because Docker manages the
+volume permissions internally.
 
 ## Run Locally
 
