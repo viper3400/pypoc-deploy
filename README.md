@@ -34,6 +34,7 @@ Optional runtime variables:
 - `GUNICORN_WORKERS`: defaults to `2`
 - `PLATFORM_APP_CONFIG_PREFIXES`: set to `PYDO,PYTODO` so pydo-related env vars are copied into `app.config`
 - `PLATFORM_INSTANCE_PATH`: defaults to `/app/data/flask-instance`
+- `PLATFORM_URL_PREFIX`: optional external mount path such as `/pypoc`; leave unset for normal `/` deployments
 - `PYDO_DATA_DIR`: defaults to `/app/data` in the container
 - `HOME`: defaults to `/app/data` so Gunicorn runtime state is writable
 
@@ -55,6 +56,7 @@ Example `.env`:
 ```dotenv
 SECRET_KEY=change-me
 PYTODO_PASSWORD_HASH=change-me
+# PLATFORM_URL_PREFIX=/pypoc
 ```
 
 ## Run With Docker
@@ -93,6 +95,20 @@ PLATFORM_APP_CONFIG_PREFIXES=PYDO,PYTODO \
 PLATFORM_INSTANCE_PATH=./data/flask-instance \
 PYDO_DATA_DIR=./data \
 uv run gunicorn "flask_plugin_platform:create_app()" --bind 0.0.0.0:8000 --workers 2
+```
+
+By default the product serves at `/`. For a subpath deployment behind a reverse
+proxy, set `PLATFORM_URL_PREFIX=/pypoc` in the runtime environment and have the
+proxy expose the app at that same external prefix.
+
+The same prefix setting also works with Waitress via the platform CLI:
+
+```bash
+PLATFORM_APP_CONFIG_PREFIXES=PYDO,PYTODO \
+PLATFORM_INSTANCE_PATH=./data/flask-instance \
+PLATFORM_URL_PREFIX=/pypoc \
+PYDO_DATA_DIR=./data \
+uv run platform-server --host 0.0.0.0 --port 8000
 ```
 
 Or use Flask directly during development:
