@@ -51,15 +51,15 @@ wheels = [
 
 [[package]]
 name = "flask-plugin-platform"
-version = "0.2.1"
-source = { url = "https://github.com/viper3400/pypoc/releases/download/v0.2.1/flask_plugin_platform-0.2.1-py3-none-any.whl" }
+version = "0.3.0"
+source = { url = "https://github.com/viper3400/pypoc/releases/download/v0.3.0/flask_plugin_platform-0.3.0-py3-none-any.whl" }
 dependencies = [
     { name = "flask" },
     { name = "gunicorn" },
     { name = "waitress" },
 ]
 wheels = [
-    { url = "https://github.com/viper3400/pypoc/releases/download/v0.2.1/flask_plugin_platform-0.2.1-py3-none-any.whl", hash = "sha256:fc13ec2a5cf505abeaf18b8c4d624e74df46dd064669c4c35452df2bcd970658" },
+    { url = "https://github.com/viper3400/pypoc/releases/download/v0.3.0/flask_plugin_platform-0.3.0-py3-none-any.whl", hash = "sha256:e1743d10158cc22d02d46387300c87da352581bad21123a8a69cc3d62bff2caa" },
 ]
 
 [package.metadata]
@@ -71,14 +71,14 @@ requires-dist = [
 
 [[package]]
 name = "flask-plugin-pydo"
-version = "0.1.0"
-source = { url = "https://github.com/viper3400/pydo/releases/download/plugin-pydo-v0.1.0/flask_plugin_pydo-0.1.0-py3-none-any.whl" }
+version = "1.0.0"
+source = { url = "https://github.com/viper3400/pydo/releases/download/plugin-pydo-v1.0.0/flask_plugin_pydo-1.0.0-py3-none-any.whl" }
 dependencies = [
     { name = "flask" },
     { name = "werkzeug" },
 ]
 wheels = [
-    { url = "https://github.com/viper3400/pydo/releases/download/plugin-pydo-v0.1.0/flask_plugin_pydo-0.1.0-py3-none-any.whl", hash = "sha256:9f6734de34592d12137c7fc713ee047e0d7d797ac8c04b03ceae66451c21f699" },
+    { url = "https://github.com/viper3400/pydo/releases/download/plugin-pydo-v1.0.0/flask_plugin_pydo-1.0.0-py3-none-any.whl", hash = "sha256:83c26acf22b3bef7238ad761255afec56b9da50151a4c0d6683fdae832c5379f" },
 ]
 
 [package.metadata]
@@ -152,7 +152,7 @@ wheels = [
 
 [[package]]
 name = "pypoc-deploy"
-version = "0.2.3"
+version = "0.3.0"
 source = { virtual = "." }
 dependencies = [
     { name = "flask-plugin-platform" },
@@ -161,8 +161,8 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "flask-plugin-platform", url = "https://github.com/viper3400/pypoc/releases/download/v0.2.1/flask_plugin_platform-0.2.1-py3-none-any.whl" },
-    { name = "flask-plugin-pydo", url = "https://github.com/viper3400/pydo/releases/download/plugin-pydo-v0.1.0/flask_plugin_pydo-0.1.0-py3-none-any.whl" },
+    { name = "flask-plugin-platform", url = "https://github.com/viper3400/pypoc/releases/download/v0.3.0/flask_plugin_platform-0.3.0-py3-none-any.whl" },
+    { name = "flask-plugin-pydo", url = "https://github.com/viper3400/pydo/releases/download/plugin-pydo-v1.0.0/flask_plugin_pydo-1.0.0-py3-none-any.whl" },
 ]
 
 [[package]]

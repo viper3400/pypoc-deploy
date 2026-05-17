@@ -6,7 +6,7 @@ Product deployment repository for the `flask-plugin-platform` app plus the
 ## What This Runs
 
 - A single product image built from this repo
-- `flask-plugin-platform` from the `pypoc` release `v0.2.0`
+- `flask-plugin-platform` from the `pypoc` release `v0.2.1`
 - `flask-plugin-pydo` from the `pydo` release `plugin-pydo-v0.1.0`
 - Gunicorn on port `8000` inside the container
 - Persistent task data mounted at `/app/data`
@@ -125,7 +125,7 @@ uv run flask --app flask_plugin_platform.app:create_app run --debug
 This repo builds the final product image directly from pinned Python package
 artifacts:
 
-- `https://github.com/viper3400/pypoc/releases/download/v0.2.0/flask_plugin_platform-0.2.0-py3-none-any.whl`
+- `https://github.com/viper3400/pypoc/releases/download/v0.2.1/flask_plugin_platform-0.2.1-py3-none-any.whl`
 - `https://github.com/viper3400/pydo/releases/tag/plugin-pydo-v0.1.0`
 
 See [pyproject.toml](/Users/Jan/Documents/Development/pypoc-deploy/pyproject.toml:1)
@@ -134,3 +134,21 @@ for the version pins,
 for the product image build, and
 [docker-compose.yml](/Users/Jan/Documents/Development/pypoc-deploy/docker-compose.yml:1)
 for the active runtime configuration.
+
+## Versioning
+
+Source of truth:
+- bump `project.version` in [pyproject.toml](/Users/Jan/Documents/Development/pypoc-deploy/pyproject.toml:1)
+
+Release tag format:
+- create a matching Git tag `vX.Y.Z`
+- the container publish workflow rejects tags that do not match `project.version`
+
+When to bump:
+- bump this repo when the shipped bundle changes
+- that includes platform pin changes, plugin pin changes, or deployment/runtime behavior changes
+
+Relationship to other repos:
+- this version identifies the product bundle
+- it does not have to match the platform version or the plugin version
+- if `pypoc` or `pytodo` release but this repo does not update its pins, the running deployment version does not change
